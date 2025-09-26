@@ -1,0 +1,52 @@
+  <div class="smartup-container">
+      <!-- Header -->
+      <div class="smartup-header">
+        <div class="header-left">
+          <div class="logo">SmartUP</div>
+          <div class="datetime">{{ currentDateTime }}</div>
+        </div>
+        <div class="header-right">
+          <div class="center-info">
+            <i class="icon-building"></i>
+            <span>CENTRE FORT NABEUL(7)</span>
+          </div>
+          <div class="user-actions">
+            <button class="btn-action" (click)="onInherit()">
+              <i class="icon-inherit"></i>
+              Hériter
+            </button>
+            <button class="btn-action" (click)="onAdmin()">
+              <i class="icon-user"></i>
+              Administrateur
+            </button>
+            <button class="btn-action btn-help" (click)="onHelp()">
+              <i class="icon-help"></i>
+              AIDE
+            </button>
+          </div>
+        </div>
+      </div>
+     
+      <!-- Menu Bar -->
+      <div class="menu-bar">
+        <ul class="menu-items">
+          <li><a href="#" [class.active]="activeMenu === 'parametrage'" (click)="setActiveMenu($event, 'parametrage')">Paramétrage de base <span class="dropdown-arrow">▼</span></a></li>
+          <li><a href="#" [class.active]="activeMenu === 'sessions'" (click)="setActiveMenu($event, 'sessions')">Sessions <span class="dropdown-arrow">▼</span></a></li>
+          <li><a href="#" [class.active]="activeMenu === 'commandes'" (click)="setActiveMenu($event, 'commandes')">Traitement des commandes <span class="dropdown-arrow">▼</span></a></li>
+          <li><a href="#" [class.active]="activeMenu === 'transports'" (click)="setActiveMenu($event, 'transports')">Traitement des transports <span class="dropdown-arrow">▼</span></a></li>
+          <li><a href="#" [class.active]="activeMenu === 'billet'" (click)="setActiveMenu($event, 'billet')">Traitement billet <span class="dropdown-arrow">▼</span></a></li>
+          <li><a href="#" [class.active]="activeMenu === 'monnaie'" (click)="setActiveMenu($event, 'monnaie')">Traitement monnaie <span class="dropdown-arrow">▼</span></a></li>
+          <li><a href="#" [class.active]="activeMenu === 'dab'" (click)="setActiveMenu($event, 'dab')">Traitement DAB <span class="dropdown-arrow">▼</span></a></li>
+          <li><a href="#" [class.active]="activeMenu === 'transfer'" (click)="setActiveMenu($event, 'transfer')">Salle de transfert <span class="dropdown-arrow">▼</span></a></li>
+          <li><a href="#" [class.active]="activeMenu === 'contrats'" (click)="setActiveMenu($event, 'contrats')">Contrats client(Consulter)</a></li>
+        </ul>
+      </div>
+      
+      <!-- Main Content Area -->
+      <div class="main-content">
+        <div class="wave-background"></div>
+        <div class="content-overlay">
+          <!-- Your main content goes here -->
+        </div>
+      </div>
+    </div>
