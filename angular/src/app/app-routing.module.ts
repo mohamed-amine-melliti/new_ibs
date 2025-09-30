@@ -5,17 +5,19 @@ import { Routes, RouterModule } from '@angular/router';
 // project import
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
+    redirectTo: '/auth/signin',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: AdminComponent,
+    canActivate: [AuthGuard],
     children: [
-      {
-        path: '',
-        redirectTo: '/analytics',
-        pathMatch: 'full'
-      },
       {
         path: 'analytics',
         loadComponent: () => import('./demo/dashboard/dash-analytics.component').then((c) => c.DashAnalyticsComponent)
@@ -47,15 +49,15 @@ const routes: Routes = [
     ]
   },
   {
-    path: '',
+    path: 'auth',
     component: GuestComponent,
     children: [
       {
-        path: 'login',
+        path: 'register',
         loadComponent: () => import('./demo/pages/authentication/sign-up/sign-up.component').then((c) => c.SignUpComponent)
       },
       {
-        path: 'register',
+        path: 'signin',
         loadComponent: () => import('./demo/pages/authentication/sign-in/sign-in.component').then((c) => c.SignInComponent)
       }
     ]
