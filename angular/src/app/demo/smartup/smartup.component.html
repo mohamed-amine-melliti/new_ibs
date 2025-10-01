@@ -10,11 +10,18 @@
         <a href="#" 
            [class.active]="activeMenu === menu.id"
            [class.expanded]="isMenuExpanded(menu.id)"
+           [class.no-children]="menu.subItems.length === 0"
            (click)="toggleMenu(menu.id, $event)">
+          <span class="menu-icon" *ngIf="menu.id === 'contrats'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </span>
           {{ menu.label }}
-          <span class="dropdown-arrow" [class.rotated]="isMenuExpanded(menu.id)">▼</span>
+          <span class="dropdown-arrow" *ngIf="menu.subItems.length > 0" [class.rotated]="isMenuExpanded(menu.id)">▼</span>
         </a>
-        <ul class="sub-menu" *ngIf="isMenuExpanded(menu.id)">
+        <ul class="sub-menu" *ngIf="isMenuExpanded(menu.id) && menu.subItems.length > 0">
           <li *ngFor="let subItem of menu.subItems">
             <a href="#" 
                [class.active]="activeMenu === subItem.id"
@@ -60,7 +67,7 @@
     <div class="main-content">
       <div class="wave-background"></div>
       <div class="content-overlay">
-        <!-- Your main content goes here -->
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>

@@ -6,7 +6,18 @@ import { SmartupComponent } from './smartup.component';
 const routes: Routes = [
   {
     path: '',
-    component: SmartupComponent
+    component: SmartupComponent,
+    children: [
+      {
+        path: 'contrats-client',
+        loadComponent: () => import('./contrats-client/contrats-client.component').then(m => m.ContratsClientComponent)
+      },
+      {
+        path: '',
+        redirectTo: 'contrats-client',
+        pathMatch: 'full'
+      }
+    ]
   }
 ];
 

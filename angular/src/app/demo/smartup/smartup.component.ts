@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 interface SubMenuItem {
   id: string;
@@ -17,7 +18,7 @@ interface MenuItem {
   templateUrl: './smartup.component.html',
   styleUrls: ['./smartup.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, RouterModule]
 })
 export class SmartupComponent implements OnInit, OnDestroy {
   currentDateTime: string = '';
@@ -156,16 +157,12 @@ export class SmartupComponent implements OnInit, OnDestroy {
     {
       id: 'contrats',
       label: 'Contrats client(Consulter)',
-      subItems: [
-        { id: 'contrats-actifs', label: 'Contrats actifs' },
-        { id: 'contrats-archives', label: 'Contrats archivés' },
-        { id: 'contrats-recherche', label: 'Recherche de contrats' }
-      ]
+      subItems: []
     }
   ];
 
 
-  constructor() {
+  constructor(private router: Router) {
     this.updateDateTime();
   }
 
@@ -198,6 +195,13 @@ export class SmartupComponent implements OnInit, OnDestroy {
   // Toggle menu expansion
   toggleMenu(menuId: string, event: Event): void {
     event.preventDefault();
+    
+    // Special handling for contrats menu - navigate instead of toggle
+    if (menuId === 'contrats') {
+      this.router.navigate(['/smartup/contrats-client']);
+      return;
+    }
+    
     if (this.expandedMenus.has(menuId)) {
       this.expandedMenus.delete(menuId);
     } else {

@@ -100,6 +100,26 @@
       transition: transform 0.3s ease;
     }
 
+    .menu-icon {
+      margin-right: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      
+      svg {
+        stroke: currentColor;
+        filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+      }
+    }
+
+    &.no-children {
+      cursor: pointer;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+
     &:hover {
       background: rgba(255,255,255,0.15);
       color: white;
@@ -290,8 +310,10 @@
 .content-overlay {
   position: relative;
   z-index: 2;
-  padding: 2rem;
+  padding: 0;
   min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Responsive Design */

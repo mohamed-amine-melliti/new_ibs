@@ -1,0 +1,162 @@
+<div class="contrats-client-container">
+  <!-- Search Criteria Section -->
+  <div class="search-section">
+    <div class="section-header" (click)="toggleSearchSection()">
+      <span class="section-title">Critères de recherche</span>
+      <span class="toggle-icon" [class.collapsed]="!searchSectionExpanded">▲</span>
+    </div>
+    
+    <div class="search-content" *ngIf="searchSectionExpanded">
+      <div class="search-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="client">Client:</label>
+            <input type="text" id="client" [(ngModel)]="searchCriteria.client" class="form-control">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dateDebut">Date début:</label>
+            <div class="date-input-wrapper">
+              <input type="date" id="dateDebut" [(ngModel)]="searchCriteria.dateDebut" class="form-control date-input">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="dateFin">Date fin:</label>
+            <div class="date-input-wrapper">
+              <input type="date" id="dateFin" [(ngModel)]="searchCriteria.dateFin" class="form-control date-input">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="dateSignature">Date signature:</label>
+            <div class="date-input-wrapper">
+              <input type="date" id="dateSignature" [(ngModel)]="searchCriteria.dateSignature" class="form-control date-input">
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="statut">Statut:</label>
+            <select id="statut" [(ngModel)]="searchCriteria.statut" class="form-control">
+              <option value="">Tous</option>
+              <option value="En cours">En cours</option>
+              <option value="Terminé">Terminé</option>
+              <option value="Suspendu">Suspendu</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Section -->
+  <div class="results-section">
+    <div class="section-header">
+      <span class="section-title">Liste des contrat client</span>
+      <div class="action-buttons">
+        <button class="btn-export" (click)="exportToExcel()" title="Exporter vers Excel">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </button>
+        <button class="btn-print" (click)="print()" title="Imprimer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <div class="table-container">
+      <table class="contracts-table">
+        <thead>
+          <tr>
+            <th (click)="sortBy('client')">
+              Client
+              <span class="sort-icon" *ngIf="sortColumn === 'client'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('abreviation')">
+              abreviation
+              <span class="sort-icon" *ngIf="sortColumn === 'abreviation'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('refContrat')">
+              Ref. contrat
+              <span class="sort-icon" *ngIf="sortColumn === 'refContrat'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('dateDebut')">
+              Date début
+              <span class="sort-icon" *ngIf="sortColumn === 'dateDebut'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('dateFin')">
+              Date fin
+              <span class="sort-icon" *ngIf="sortColumn === 'dateFin'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('dateSignature')">
+              Date signat...
+              <span class="sort-icon" *ngIf="sortColumn === 'dateSignature'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('exonerationTi')">
+              Exonération ti...
+              <span class="sort-icon" *ngIf="sortColumn === 'exonerationTi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('exonerationTva')">
+              Exonération T...
+              <span class="sort-icon" *ngIf="sortColumn === 'exonerationTva'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('fondRoulement')">
+              Fond de roulement
+              <span class="sort-icon" *ngIf="sortColumn === 'fondRoulement'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('mntMarche')">
+              Mnt. marché ...
+              <span class="sort-icon" *ngIf="sortColumn === 'mntMarche'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('modeleCommande')">
+              Model de commande
+              <span class="sort-icon" *ngIf="sortColumn === 'modeleCommande'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="sortBy('statut')">
+              Statut
+              <span class="sort-icon" *ngIf="sortColumn === 'statut'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let contract of getFilteredContracts()" 
+              [class.selected]="selectedContract?.client === contract.client"
+              (click)="selectContract(contract)">
+            <td>{{ contract.client }}</td>
+            <td>{{ contract.abreviation }}</td>
+            <td>{{ contract.refContrat }}</td>
+            <td>{{ contract.dateDebut }}</td>
+            <td>{{ contract.dateFin }}</td>
+            <td>{{ contract.dateSignature }}</td>
+            <td>{{ contract.exonerationTi }}</td>
+            <td>{{ contract.exonerationTva }}</td>
+            <td>{{ contract.fondRoulement }}</td>
+            <td>{{ contract.mntMarche }}</td>
+            <td>{{ contract.modeleCommande }}</td>
+            <td>
+              <span class="status-badge" [class.status-en-cours]="contract.statut === 'En cours'">
+                {{ contract.statut }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="pagination">
+      <span class="pagination-info">Affichage 1 - {{ getFilteredContracts().length }} de {{ contracts.length }}</span>
+    </div>
+  </div>
+</div>
+
