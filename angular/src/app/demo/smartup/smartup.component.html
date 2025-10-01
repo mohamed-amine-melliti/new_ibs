@@ -68,6 +68,45 @@
       <div class="wave-background"></div>
       <div class="content-overlay">
         <router-outlet></router-outlet>
+        
+        <!-- Default Welcome Screen (shows when no route is active) -->
+        <div class="welcome-screen" *ngIf="!isRouteActive()">
+          <div class="welcome-content">
+            <div class="welcome-icon">
+              <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+            <h1 class="welcome-title">Bienvenue sur Smart IBS</h1>
+            <p class="welcome-subtitle">Système de gestion intégré pour les opérations bancaires</p>
+            <div class="welcome-instructions">
+              <p>Sélectionnez une option dans le menu à gauche pour commencer</p>
+            </div>
+            <div class="feature-cards">
+              <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Gestion des Contrats</h3>
+                <p>Consultez et gérez les contrats clients</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">🚚</div>
+                <h3>Traitement des Transports</h3>
+                <p>Suivi et gestion des transports</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Traitement Billets/Monnaie</h3>
+                <p>Gestion des opérations monétaires</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Rapports et Statistiques</h3>
+                <p>Analyses et éditions détaillées</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -316,6 +316,114 @@
   flex-direction: column;
 }
 
+// Welcome Screen Styles
+.welcome-screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.welcome-content {
+  text-align: center;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.welcome-icon {
+  margin-bottom: 2rem;
+  animation: float 3s ease-in-out infinite;
+  
+  svg {
+    stroke: #667eea;
+    filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.3));
+  }
+}
+
+.welcome-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-subtitle {
+  font-size: 1.25rem;
+  color: #718096;
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+
+.welcome-instructions {
+  margin-bottom: 3rem;
+  
+  p {
+    font-size: 1rem;
+    color: #4a5568;
+    padding: 1rem 2rem;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 12px;
+    display: inline-block;
+  }
+}
+
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  background: white;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+    border-color: #667eea;
+  }
+  
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+  }
+  
+  p {
+    font-size: 0.875rem;
+    color: #718096;
+    line-height: 1.5;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
   .menu-bar {
@@ -397,6 +505,29 @@
     a {
       text-align: left;
     }
+  }
+  
+  // Welcome screen responsive
+  .welcome-screen {
+    padding: 1.5rem;
+  }
+  
+  .welcome-title {
+    font-size: 2rem;
+  }
+  
+  .welcome-subtitle {
+    font-size: 1rem;
+  }
+  
+  .feature-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .welcome-icon svg {
+    width: 80px;
+    height: 80px;
   }
 }
 

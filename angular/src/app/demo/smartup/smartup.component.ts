@@ -238,4 +238,9 @@ export class SmartupComponent implements OnInit, OnDestroy {
     console.log('Help button clicked');
     // Implement help functionality here
   }
+
+  // Check if any child route is currently active
+  isRouteActive(): boolean {
+    return this.router.url.includes('/smartup/') && this.router.url !== '/smartup' && this.router.url !== '/smartup/';
+  }
 }

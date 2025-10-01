@@ -11,11 +11,6 @@ const routes: Routes = [
       {
         path: 'contrats-client',
         loadComponent: () => import('./contrats-client/contrats-client.component').then(m => m.ContratsClientComponent)
-      },
-      {
-        path: '',
-        redirectTo: 'contrats-client',
-        pathMatch: 'full'
       }
     ]
   }
