@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 export interface Contract {
   client: string;
@@ -30,7 +31,25 @@ export interface SearchCriteria {
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './contrats-client.component.html',
-  styleUrls: ['./contrats-client.component.scss']
+  styleUrls: ['./contrats-client.component.scss'],
+  animations: [
+    trigger('slideDown', [
+      transition(':enter', [
+        style({ height: 0, opacity: 0, overflow: 'hidden' }),
+        animate('300ms ease-out', style({ height: '*', opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ height: '*', opacity: 1, overflow: 'hidden' }),
+        animate('300ms ease-in', style({ height: 0, opacity: 0 }))
+      ])
+    ]),
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(10px)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 export class ContratsClientComponent implements OnInit {
   searchSectionExpanded = true;
@@ -311,6 +330,25 @@ export class ContratsClientComponent implements OnInit {
       return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
     }
     return new Date();
+  }
+
+  hasActiveFilters(): boolean {
+    return !!(this.searchCriteria.client || 
+              this.searchCriteria.dateDebut || 
+              this.searchCriteria.dateFin || 
+              this.searchCriteria.dateSignature || 
+              this.searchCriteria.statut);
+  }
+
+  clearFilters(event: Event): void {
+    event.stopPropagation();
+    this.searchCriteria = {
+      client: '',
+      dateDebut: '',
+      dateFin: '',
+      dateSignature: '',
+      statut: ''
+    };
   }
 }
 

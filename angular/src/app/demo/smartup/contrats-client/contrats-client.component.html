@@ -1,38 +1,125 @@
 <div class="contrats-client-container">
+  <!-- Page Header with Breadcrumb -->
+  <div class="page-header">
+    <div class="breadcrumb">
+      <svg class="breadcrumb-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      </svg>
+      <span class="breadcrumb-divider">/</span>
+      <span class="breadcrumb-item">Contrats</span>
+      <span class="breadcrumb-divider">/</span>
+      <span class="breadcrumb-item active">Liste des contrats clients</span>
+    </div>
+    <h1 class="page-title">
+      <svg class="title-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      Gestion des Contrats Clients
+    </h1>
+  </div>
+
   <!-- Search Criteria Section -->
   <div class="search-section">
     <div class="section-header" (click)="toggleSearchSection()">
-      <span class="section-title">Critères de recherche</span>
-      <span class="toggle-icon" [class.collapsed]="!searchSectionExpanded">▲</span>
+      <div class="header-left">
+        <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        <span class="section-title">Critères de recherche</span>
+        <span class="results-count" *ngIf="getFilteredContracts().length > 0">
+          {{ getFilteredContracts().length }} résultat<span *ngIf="getFilteredContracts().length > 1">s</span>
+        </span>
+      </div>
+      <div class="header-right">
+        <button class="btn-clear" *ngIf="hasActiveFilters()" (click)="clearFilters($event)" title="Effacer les filtres">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+          Effacer
+        </button>
+        <span class="toggle-icon" [class.collapsed]="!searchSectionExpanded">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </span>
+      </div>
     </div>
     
-    <div class="search-content" *ngIf="searchSectionExpanded">
+    <div class="search-content" [@slideDown] *ngIf="searchSectionExpanded">
       <div class="search-form">
         <div class="form-row">
           <div class="form-group">
-            <label for="client">Client:</label>
-            <input type="text" id="client" [(ngModel)]="searchCriteria.client" class="form-control">
+            <label for="client">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              Client
+            </label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                id="client" 
+                [(ngModel)]="searchCriteria.client" 
+                class="form-control"
+                placeholder="Rechercher un client...">
+              <span class="input-icon" *ngIf="searchCriteria.client" (click)="searchCriteria.client = ''">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
         
         <div class="form-row">
           <div class="form-group">
-            <label for="dateDebut">Date début:</label>
-            <div class="date-input-wrapper">
+            <label for="dateDebut">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              Date début
+            </label>
+            <div class="input-wrapper">
               <input type="date" id="dateDebut" [(ngModel)]="searchCriteria.dateDebut" class="form-control date-input">
             </div>
           </div>
           
           <div class="form-group">
-            <label for="dateFin">Date fin:</label>
-            <div class="date-input-wrapper">
+            <label for="dateFin">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              Date fin
+            </label>
+            <div class="input-wrapper">
               <input type="date" id="dateFin" [(ngModel)]="searchCriteria.dateFin" class="form-control date-input">
             </div>
           </div>
           
           <div class="form-group">
-            <label for="dateSignature">Date signature:</label>
-            <div class="date-input-wrapper">
+            <label for="dateSignature">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 15c5.5 0 7-7 12-7s4.5 7 9 7"/>
+              </svg>
+              Date signature
+            </label>
+            <div class="input-wrapper">
               <input type="date" id="dateSignature" [(ngModel)]="searchCriteria.dateSignature" class="form-control date-input">
             </div>
           </div>
@@ -40,13 +127,21 @@
         
         <div class="form-row">
           <div class="form-group">
-            <label for="statut">Statut:</label>
-            <select id="statut" [(ngModel)]="searchCriteria.statut" class="form-control">
-              <option value="">Tous</option>
-              <option value="En cours">En cours</option>
-              <option value="Terminé">Terminé</option>
-              <option value="Suspendu">Suspendu</option>
-            </select>
+            <label for="statut">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              Statut
+            </label>
+            <div class="input-wrapper">
+              <select id="statut" [(ngModel)]="searchCriteria.statut" class="form-control">
+                <option value="">Tous les statuts</option>
+                <option value="En cours">En cours</option>
+                <option value="Terminé">Terminé</option>
+                <option value="Suspendu">Suspendu</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -56,106 +151,204 @@
   <!-- Results Section -->
   <div class="results-section">
     <div class="section-header">
-      <span class="section-title">Liste des contrat client</span>
+      <div class="header-left">
+        <svg class="section-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/>
+        </svg>
+        <span class="section-title">Liste des contrats clients</span>
+        <span class="total-count">{{ getFilteredContracts().length }} contrat<span *ngIf="getFilteredContracts().length > 1">s</span></span>
+      </div>
       <div class="action-buttons">
-        <button class="btn-export" (click)="exportToExcel()" title="Exporter vers Excel">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button class="btn-action btn-export" (click)="exportToExcel()" title="Exporter vers Excel">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="7 10 12 15 17 10"/>
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
+          <span class="btn-text">Excel</span>
         </button>
-        <button class="btn-print" (click)="print()" title="Imprimer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button class="btn-action btn-print" (click)="print()" title="Imprimer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="6 9 6 2 18 2 18 9"/>
             <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
             <rect x="6" y="14" width="12" height="8"/>
           </svg>
+          <span class="btn-text">Imprimer</span>
         </button>
       </div>
     </div>
     
     <div class="table-container">
-      <table class="contracts-table">
-        <thead>
-          <tr>
-            <th (click)="sortBy('client')">
-              Client
-              <span class="sort-icon" *ngIf="sortColumn === 'client'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('abreviation')">
-              abreviation
-              <span class="sort-icon" *ngIf="sortColumn === 'abreviation'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('refContrat')">
-              Ref. contrat
-              <span class="sort-icon" *ngIf="sortColumn === 'refContrat'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('dateDebut')">
-              Date début
-              <span class="sort-icon" *ngIf="sortColumn === 'dateDebut'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('dateFin')">
-              Date fin
-              <span class="sort-icon" *ngIf="sortColumn === 'dateFin'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('dateSignature')">
-              Date signat...
-              <span class="sort-icon" *ngIf="sortColumn === 'dateSignature'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('exonerationTi')">
-              Exonération ti...
-              <span class="sort-icon" *ngIf="sortColumn === 'exonerationTi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('exonerationTva')">
-              Exonération T...
-              <span class="sort-icon" *ngIf="sortColumn === 'exonerationTva'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('fondRoulement')">
-              Fond de roulement
-              <span class="sort-icon" *ngIf="sortColumn === 'fondRoulement'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('mntMarche')">
-              Mnt. marché ...
-              <span class="sort-icon" *ngIf="sortColumn === 'mntMarche'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('modeleCommande')">
-              Model de commande
-              <span class="sort-icon" *ngIf="sortColumn === 'modeleCommande'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th (click)="sortBy('statut')">
-              Statut
-              <span class="sort-icon" *ngIf="sortColumn === 'statut'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let contract of getFilteredContracts()" 
-              [class.selected]="selectedContract?.client === contract.client"
-              (click)="selectContract(contract)">
-            <td>{{ contract.client }}</td>
-            <td>{{ contract.abreviation }}</td>
-            <td>{{ contract.refContrat }}</td>
-            <td>{{ contract.dateDebut }}</td>
-            <td>{{ contract.dateFin }}</td>
-            <td>{{ contract.dateSignature }}</td>
-            <td>{{ contract.exonerationTi }}</td>
-            <td>{{ contract.exonerationTva }}</td>
-            <td>{{ contract.fondRoulement }}</td>
-            <td>{{ contract.mntMarche }}</td>
-            <td>{{ contract.modeleCommande }}</td>
-            <td>
-              <span class="status-badge" [class.status-en-cours]="contract.statut === 'En cours'">
-                {{ contract.statut }}
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table class="contracts-table">
+          <thead>
+            <tr>
+              <th (click)="sortBy('client')" [class.sorted]="sortColumn === 'client'">
+                <div class="th-content">
+                  <span>Client</span>
+                  <span class="sort-icons">
+                    <svg class="sort-icon" [class.active]="sortColumn === 'client' && sortDirection === 'asc'" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="18 15 12 9 6 15"/>
+                    </svg>
+                    <svg class="sort-icon" [class.active]="sortColumn === 'client' && sortDirection === 'desc'" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </span>
+                </div>
+              </th>
+              <th (click)="sortBy('abreviation')" [class.sorted]="sortColumn === 'abreviation'">
+                <div class="th-content">
+                  <span>Abréviation</span>
+                  <span class="sort-icons">
+                    <svg class="sort-icon" [class.active]="sortColumn === 'abreviation' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="18 15 12 9 6 15"/>
+                    </svg>
+                    <svg class="sort-icon" [class.active]="sortColumn === 'abreviation' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </span>
+                </div>
+              </th>
+              <th (click)="sortBy('refContrat')" [class.sorted]="sortColumn === 'refContrat'">
+                <div class="th-content">
+                  <span>Réf. contrat</span>
+                  <span class="sort-icons">
+                    <svg class="sort-icon" [class.active]="sortColumn === 'refContrat' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="18 15 12 9 6 15"/>
+                    </svg>
+                    <svg class="sort-icon" [class.active]="sortColumn === 'refContrat' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </span>
+                </div>
+              </th>
+              <th (click)="sortBy('dateDebut')" [class.sorted]="sortColumn === 'dateDebut'">
+                <div class="th-content">
+                  <span>Date début</span>
+                  <span class="sort-icons">
+                    <svg class="sort-icon" [class.active]="sortColumn === 'dateDebut' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="18 15 12 9 6 15"/>
+                    </svg>
+                    <svg class="sort-icon" [class.active]="sortColumn === 'dateDebut' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </span>
+                </div>
+              </th>
+              <th (click)="sortBy('dateFin')" [class.sorted]="sortColumn === 'dateFin'">
+                <div class="th-content">
+                  <span>Date fin</span>
+                  <span class="sort-icons">
+                    <svg class="sort-icon" [class.active]="sortColumn === 'dateFin' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="18 15 12 9 6 15"/>
+                    </svg>
+                    <svg class="sort-icon" [class.active]="sortColumn === 'dateFin' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </span>
+                </div>
+              </th>
+              <th (click)="sortBy('dateSignature')" [class.sorted]="sortColumn === 'dateSignature'">
+                <div class="th-content">
+                  <span>Date signature</span>
+                  <span class="sort-icons">
+                    <svg class="sort-icon" [class.active]="sortColumn === 'dateSignature' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="18 15 12 9 6 15"/>
+                    </svg>
+                    <svg class="sort-icon" [class.active]="sortColumn === 'dateSignature' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </span>
+                </div>
+              </th>
+              <th>Exonération TI</th>
+              <th>Exonération TVA</th>
+              <th>Fond de roulement</th>
+              <th>Mnt. marché</th>
+              <th>Modèle de commande</th>
+              <th (click)="sortBy('statut')" [class.sorted]="sortColumn === 'statut'">
+                <div class="th-content">
+                  <span>Statut</span>
+                  <span class="sort-icons">
+                    <svg class="sort-icon" [class.active]="sortColumn === 'statut' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="18 15 12 9 6 15"/>
+                    </svg>
+                    <svg class="sort-icon" [class.active]="sortColumn === 'statut' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let contract of getFilteredContracts(); let i = index" 
+                [class.selected]="selectedContract?.client === contract.client"
+                (click)="selectContract(contract)"
+                [@fadeIn]
+                [style.animation-delay.ms]="i * 20">
+              <td data-label="Client"><strong>{{ contract.client }}</strong></td>
+              <td data-label="Abréviation">{{ contract.abreviation }}</td>
+              <td data-label="Réf. contrat">
+                <span class="ref-badge" *ngIf="contract.refContrat">{{ contract.refContrat }}</span>
+                <span class="text-muted" *ngIf="!contract.refContrat">—</span>
+              </td>
+              <td data-label="Date début">{{ contract.dateDebut }}</td>
+              <td data-label="Date fin">{{ contract.dateFin }}</td>
+              <td data-label="Date signature">{{ contract.dateSignature }}</td>
+              <td data-label="Exonération TI">
+                <span class="badge-yes-no" [class.yes]="contract.exonerationTi === 'Oui'">{{ contract.exonerationTi }}</span>
+              </td>
+              <td data-label="Exonération TVA">
+                <span class="badge-yes-no" [class.yes]="contract.exonerationTva === 'Oui'">{{ contract.exonerationTva }}</span>
+              </td>
+              <td data-label="Fond de roulement">
+                <span class="text-muted" *ngIf="!contract.fondRoulement">—</span>
+                <span *ngIf="contract.fondRoulement">{{ contract.fondRoulement }}</span>
+              </td>
+              <td data-label="Mnt. marché">
+                <span class="text-muted" *ngIf="!contract.mntMarche">—</span>
+                <span *ngIf="contract.mntMarche">{{ contract.mntMarche }}</span>
+              </td>
+              <td data-label="Modèle de commande">
+                <span class="model-text">{{ contract.modeleCommande }}</span>
+              </td>
+              <td data-label="Statut">
+                <span class="status-badge" 
+                      [class.status-en-cours]="contract.statut === 'En cours'"
+                      [class.status-termine]="contract.statut === 'Terminé'"
+                      [class.status-suspendu]="contract.statut === 'Suspendu'">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="12" r="12"/>
+                  </svg>
+                  {{ contract.statut }}
+                </span>
+              </td>
+            </tr>
+            <tr *ngIf="getFilteredContracts().length === 0" class="no-data-row">
+              <td colspan="12">
+                <div class="no-data">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  <p>Aucun contrat trouvé</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     
     <div class="pagination">
-      <span class="pagination-info">Affichage 1 - {{ getFilteredContracts().length }} de {{ contracts.length }}</span>
+      <div class="pagination-left">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/>
+        </svg>
+        <span class="pagination-info">Affichage <strong>1 - {{ getFilteredContracts().length }}</strong> sur <strong>{{ contracts.length }}</strong> contrats</span>
+      </div>
     </div>
   </div>
 </div>
