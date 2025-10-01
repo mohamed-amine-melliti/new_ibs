@@ -1,70 +1,154 @@
 <!-- login.component.html -->
 <div class="login-container">
+  <!-- Animated Background Elements -->
+  <div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
   <div class="login-wrapper">
     <div class="left-panel">
       <div class="logo-section">
         <div class="logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M25 5L45 15V35L25 45L5 35V15L25 5Z" fill="white" fill-opacity="0.2" stroke="white" stroke-width="2"/>
+              <circle cx="25" cy="25" r="8" fill="white"/>
+            </svg>
+          </div>
           <div class="logo-text">SmartUP</div>
           <div class="logo-tagline">Your Software Partner</div>
         </div>
       </div>
       
       <div class="content-section">
-        <h1 class="welcome-title">
-          BIENVENUE SUR<br />
-          SMART IBS
+        <h1 class="welcome-title" data-text="BIENVENUE SUR">
+          <span class="title-line">BIENVENUE SUR</span>
+          <span class="title-highlight">SMART IBS</span>
         </h1>
+        
         <div class="info-box">
-          <p>SAISISSEZ VOS INFORMATION DE CONNEXION</p>
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <p>Saisissez vos informations de connexion</p>
         </div>
         
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-          <div class="form-group">
-            <label for="identifiant">Identifiant:</label>
-            <input
-              type="text"
-              id="identifiant"
-              formControlName="username"
-              class="form-input"
-              placeholder="admin" />
+          <div class="form-group" [class.has-error]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </span>
+              <input
+                type="text"
+                id="identifiant"
+                formControlName="username"
+                class="form-input"
+                placeholder=" "
+                [class.filled]="loginForm.get('username')?.value" />
+              <label for="identifiant" class="floating-label">Identifiant</label>
+            </div>
+            <span class="error-message" *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+              L'identifiant est requis
+            </span>
           </div>
           
           <div class="form-group">
-            <label for="nom">Nom:</label>
-            <input
-              type="text"
-              id="nom"
-              class="form-input"
-              value="Administrateur"
-              readonly />
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input
+                type="text"
+                id="nom"
+                class="form-input readonly-input"
+                value="Administrateur"
+                readonly
+                placeholder=" " />
+              <label for="nom" class="floating-label">Nom</label>
+            </div>
           </div>
           
-          <div class="form-group">
-            <label for="password">Mot de passe:</label>
-            <input
-              type="password"
-              id="password"
-              formControlName="password"
-              class="form-input"
-              placeholder="••••••••••••••••" />
+          <div class="form-group" [class.has-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                id="password"
+                formControlName="password"
+                class="form-input"
+                placeholder=" "
+                [class.filled]="loginForm.get('password')?.value" />
+              <label for="password" class="floating-label">Mot de passe</label>
+              <button type="button" class="toggle-password" (click)="togglePassword()" [attr.aria-label]="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'">
+                <svg *ngIf="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <svg *ngIf="showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+            <span class="error-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+              Le mot de passe est requis
+            </span>
           </div>
           
-          <button type="submit" class="btn-submit">
-            <span class="check-icon">✓</span>
-            Valider
-          </button>
+          <div class="form-actions">
+            <button type="submit" class="btn-submit" [disabled]="isLoading" [class.loading]="isLoading">
+              <span class="btn-content" *ngIf="!isLoading">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Valider</span>
+              </span>
+              <span class="spinner" *ngIf="isLoading"></span>
+            </button>
+          </div>
+
+          <div class="help-text">
+            <p>Identifiant par défaut: <strong>admin</strong></p>
+            <p>Mot de passe par défaut: <strong>admin</strong></p>
+          </div>
         </form>
       </div>
     </div>
     
     <div class="right-panel">
+      <div class="decorative-circles">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+      </div>
+      
       <div class="ibs-logo-wrapper">
         <div class="ibs-logo">
-          <img src="https://i.ibb.co/9kFRB350/Capture-d-cran-2025-09-29-100237.png">
+          <img src="https://i.ibb.co/9kFRB350/Capture-d-cran-2025-09-29-100237.png" alt="IBS Logo">
           <div class="ibs-main">
             <div class="ibs-circle"></div>
             <div class="ibs-letters">IBS</div>
           </div>
+        </div>
+        <div class="tagline">
+          <p>Innovation • Excellence • Partnership</p>
         </div>
       </div>
     </div>
