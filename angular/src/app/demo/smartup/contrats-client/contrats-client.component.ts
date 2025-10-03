@@ -350,5 +350,23 @@ export class ContratsClientComponent implements OnInit {
       statut: ''
     };
   }
+
+  search(): void {
+    // Trigger search - the getFilteredContracts() method already handles the filtering
+    // This method can be used for additional search logic if needed
+    console.log('Searching with criteria:', this.searchCriteria);
+  }
+
+  resetSearch(): void {
+    // Reset all search criteria
+    this.searchCriteria = {
+      client: '',
+      dateDebut: '',
+      dateFin: '',
+      dateSignature: '',
+      statut: ''
+    };
+    console.log('Search criteria reset');
+  }
 }
 

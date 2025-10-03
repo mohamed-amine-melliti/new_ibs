@@ -68,4 +68,8 @@ export class AdminComponent {
       document.querySelector('app-navigation.pcoded-navbar')?.classList.remove('mob-open');
     }
   }
+
+  navMobCollapse() {
+    this.navMobClick();
+  }
 }

@@ -22,125 +22,218 @@
     </h1>
   </div>
 
-  <!-- Search Criteria Section -->
+  <!-- Beautiful Search Criteria Section -->
   <div class="search-section">
-    <div class="section-header" (click)="toggleSearchSection()">
-      <div class="header-left">
-        <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/>
-          <path d="m21 21-4.35-4.35"/>
-        </svg>
-        <span class="section-title">Critères de recherche</span>
-        <span class="results-count" *ngIf="getFilteredContracts().length > 0">
-          {{ getFilteredContracts().length }} résultat<span *ngIf="getFilteredContracts().length > 1">s</span>
-        </span>
-      </div>
-      <div class="header-right">
-        <button class="btn-clear" *ngIf="hasActiveFilters()" (click)="clearFilters($event)" title="Effacer les filtres">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-          Effacer
-        </button>
-        <span class="toggle-icon" [class.collapsed]="!searchSectionExpanded">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="6 9 12 15 18 9"/>
-          </svg>
-        </span>
+    <div class="search-header" (click)="toggleSearchSection()">
+      <div class="search-header-content">
+        <div class="search-title-section">
+          <div class="search-icon-wrapper">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </div>
+          <div class="search-title-content">
+            <h3 class="search-title">Critères de recherche</h3>
+            <p class="search-subtitle">Filtrez et trouvez les contrats clients</p>
+          </div>
+        </div>
+        <div class="search-stats">
+          <div class="stat-item" *ngIf="getFilteredContracts().length > 0">
+            <div class="stat-number">{{ getFilteredContracts().length }}</div>
+            <div class="stat-label">résultat<span *ngIf="getFilteredContracts().length > 1">s</span></div>
+          </div>
+          <div class="search-actions">
+            <button class="btn-clear-filters" *ngIf="hasActiveFilters()" (click)="clearFilters($event)" title="Effacer tous les filtres">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+              <span>Effacer</span>
+            </button>
+            <div class="toggle-button" [class.expanded]="searchSectionExpanded">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     
     <div class="search-content" [@slideDown] *ngIf="searchSectionExpanded">
-      <div class="search-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="client">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-              Client
-            </label>
-            <div class="input-wrapper">
-              <input 
-                type="text" 
-                id="client" 
-                [(ngModel)]="searchCriteria.client" 
-                class="form-control"
-                placeholder="Rechercher un client...">
-              <span class="input-icon" *ngIf="searchCriteria.client" (click)="searchCriteria.client = ''">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="18" y1="6" x2="6" y2="18"/>
-                  <line x1="6" y1="6" x2="18" y2="18"/>
+      <div class="search-form-container">
+        <div class="search-form">
+          <!-- Client Search -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <div class="section-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                 </svg>
-              </span>
+              </div>
+              <h4 class="section-title">Informations client</h4>
+            </div>
+            <div class="form-field">
+              <label for="client" class="field-label">
+                <span class="label-text">Nom du client</span>
+                <span class="label-required">*</span>
+              </label>
+              <div class="input-container">
+                <div class="input-icon-left">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <input 
+                  type="text" 
+                  id="client" 
+                  [(ngModel)]="searchCriteria.client" 
+                  class="form-input"
+                  placeholder="Saisissez le nom du client...">
+                <button class="input-clear" *ngIf="searchCriteria.client" (click)="searchCriteria.client = ''" type="button">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Date Range -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <div class="section-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </div>
+              <h4 class="section-title">Période de recherche</h4>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="dateDebut" class="field-label">
+                  <span class="label-text">Date de début</span>
+                </label>
+                <div class="input-container">
+                  <div class="input-icon-left">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                    </svg>
+                  </div>
+                  <input type="date" id="dateDebut" [(ngModel)]="searchCriteria.dateDebut" class="form-input date-input">
+                </div>
+              </div>
+              
+              <div class="form-field">
+                <label for="dateFin" class="field-label">
+                  <span class="label-text">Date de fin</span>
+                </label>
+                <div class="input-container">
+                  <div class="input-icon-left">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                    </svg>
+                  </div>
+                  <input type="date" id="dateFin" [(ngModel)]="searchCriteria.dateFin" class="form-input date-input">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Filters -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <div class="section-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </div>
+              <h4 class="section-title">Filtres avancés</h4>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="dateSignature" class="field-label">
+                  <span class="label-text">Date de signature</span>
+                </label>
+                <div class="input-container">
+                  <div class="input-icon-left">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  </div>
+                  <input type="date" id="dateSignature" [(ngModel)]="searchCriteria.dateSignature" class="form-input date-input">
+                </div>
+              </div>
+              
+              <div class="form-field">
+                <label for="statut" class="field-label">
+                  <span class="label-text">Statut du contrat</span>
+                </label>
+                <div class="input-container">
+                  <div class="input-icon-left">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                      <line x1="9" y1="9" x2="9.01" y2="9"/>
+                      <line x1="15" y1="9" x2="15.01" y2="9"/>
+                    </svg>
+                  </div>
+                  <select id="statut" [(ngModel)]="searchCriteria.statut" class="form-input select-input">
+                    <option value="">Tous les statuts</option>
+                    <option value="En cours">En cours</option>
+                    <option value="Terminé">Terminé</option>
+                    <option value="Suspendu">Suspendu</option>
+                  </select>
+                  <div class="select-arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="dateDebut">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
+
+        <!-- Action Buttons -->
+        <div class="form-actions">
+          <div class="action-buttons">
+            <button type="button" class="btn-primary" (click)="search()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
               </svg>
-              Date début
-            </label>
-            <div class="input-wrapper">
-              <input type="date" id="dateDebut" [(ngModel)]="searchCriteria.dateDebut" class="form-control date-input">
-            </div>
+              <span>Rechercher</span>
+            </button>
+            <button type="button" class="btn-secondary" (click)="resetSearch()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+              <span>Réinitialiser</span>
+            </button>
           </div>
-          
-          <div class="form-group">
-            <label for="dateFin">
+          <div class="search-info">
+            <div class="info-item" *ngIf="hasActiveFilters()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
-              Date fin
-            </label>
-            <div class="input-wrapper">
-              <input type="date" id="dateFin" [(ngModel)]="searchCriteria.dateFin" class="form-control date-input">
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="dateSignature">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 15c5.5 0 7-7 12-7s4.5 7 9 7"/>
-              </svg>
-              Date signature
-            </label>
-            <div class="input-wrapper">
-              <input type="date" id="dateSignature" [(ngModel)]="searchCriteria.dateSignature" class="form-control date-input">
-            </div>
-          </div>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="statut">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                <polyline points="22 4 12 14.01 9 11.01"/>
-              </svg>
-              Statut
-            </label>
-            <div class="input-wrapper">
-              <select id="statut" [(ngModel)]="searchCriteria.statut" class="form-control">
-                <option value="">Tous les statuts</option>
-                <option value="En cours">En cours</option>
-                <option value="Terminé">Terminé</option>
-                <option value="Suspendu">Suspendu</option>
-              </select>
+              <span>Filtres actifs</span>
             </div>
           </div>
         </div>

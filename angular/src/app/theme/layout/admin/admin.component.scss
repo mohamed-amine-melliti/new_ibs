@@ -1,1 +1,304 @@
-// This file is intentionally left empty to allow customers to add custom CSS if needed.
+// Modern Admin Layout with shadcn/ui styling
+.admin-layout {
+  min-height: 100vh;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+// Sidebar Styles
+.sidebar {
+  width: 280px;
+  background: hsl(var(--card));
+  border-right: 1px solid hsl(var(--border));
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+  z-index: 1000;
+
+  &.collapsed {
+    width: 80px;
+
+    .logo-text {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    .user-section {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+  }
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-6);
+}
+
+// Logo Section
+.logo-section {
+  margin-bottom: var(--spacing-8);
+  padding-bottom: var(--spacing-6);
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.logo-icon {
+  width: 48px;
+  height: 48px;
+  background: hsl(var(--primary));
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+
+  svg {
+    stroke: hsl(var(--primary-foreground));
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.logo-text {
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+  .logo-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: hsl(var(--foreground));
+    margin: 0 0 var(--spacing-1) 0;
+    line-height: 1.2;
+  }
+
+  .logo-subtitle {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+    line-height: 1.2;
+  }
+}
+
+// Navigation
+.navigation {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: var(--spacing-2);
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+}
+
+// User Section
+.user-section {
+  margin-top: auto;
+  padding-top: var(--spacing-6);
+  border-top: 1px solid hsl(var(--border));
+  transition: all 0.3s ease;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  background: hsl(var(--muted) / 0.5);
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: hsl(var(--muted));
+  }
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.8));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+
+  .avatar-text {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(var(--primary-foreground));
+  }
+}
+
+.user-info {
+  flex: 1;
+  min-width: 0;
+
+  .user-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    margin: 0 0 var(--spacing-1) 0;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .user-email {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// Main Content Area
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: hsl(var(--background));
+}
+
+// Top Navigation Bar
+.top-navbar {
+  background: hsl(var(--card));
+  border-bottom: 1px solid hsl(var(--border));
+  box-shadow: var(--shadow-sm);
+  z-index: 100;
+  position: relative;
+}
+
+// Page Content
+.page-content {
+  flex: 1;
+  overflow-y: auto;
+  background: hsl(var(--background));
+}
+
+.content-wrapper {
+  padding: var(--spacing-6);
+  max-width: 100%;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: 1000;
+
+    &.mobile-open {
+      transform: translateX(0);
+    }
+  }
+
+  .main-content {
+    width: 100%;
+  }
+
+  .content-wrapper {
+    padding: var(--spacing-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .content-wrapper {
+    padding: var(--spacing-3);
+  }
+
+  .logo-container {
+    gap: var(--spacing-2);
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .logo-text {
+    .logo-title {
+      font-size: 1.125rem;
+    }
+
+    .logo-subtitle {
+      font-size: 0.6875rem;
+    }
+  }
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background: hsl(var(--card));
+    border-color: hsl(var(--border));
+  }
+
+  .user-profile {
+    background: hsl(var(--muted) / 0.3);
+
+    &:hover {
+      background: hsl(var(--muted) / 0.5);
+    }
+  }
+}
+
+// Animation for smooth transitions
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.logo-text,
+.user-section {
+  animation: slideIn 0.3s ease-out;
+}
